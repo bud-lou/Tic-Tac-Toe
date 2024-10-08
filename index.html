@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Danielle's Tic Tac Toe Game</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+    body{
+      background-color: #DFE7FD;
+    }
+    #board {
+      margin-left: 20%;
+
+    }
+    .row div {
+      padding: 10px;
+      border: 1px solid black;
+      height: 80px;
+      width: 80px;
+      float: left;
+      font-size: 70px;
+      text-align: center;
+    }
+    .row {
+      clear: both;
+    }
+    #reset {
+      margin-top: 60px;
+      margin-left: 20px;
+      background-color: #b4a7d6;
+      font-size: 20px;
+      padding: 8px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    h1 {
+      text-align: center;
+    }
+
+      
+    </style>
+  </head>
+  <body>
+    <!-- Danielle Brown's Code -->
+    <script src="script.js"></script>
+    <h1>Danielle's Tic Tac Toe. Click to play.</h1>
+    
+    <!--The Game Board -->
+    <div id="board">
+      <div class="row">
+        <div id="0_0" onclick="place(this)"></div>
+        <div id="1_0" onclick="place(this)"></div>
+        <div id="2_0" onclick="place(this)"></div>
+      </div>
+      <div class="row">
+        <div id="0_1" onclick="place(this)"></div>
+        <div id="1_1" onclick="place(this)"></div>
+        <div id="2_1" onclick="place(this)"></div>
+      </div>
+      <div class="row">
+        <div id="0_2" onclick="place(this)"></div>
+        <div id="1_2" onclick="place(this)"></div>
+        <div id="2_2" onclick="place(this)"></div>
+      </div>
+    </div>
+    <!--Reset Button-->
+    <button id="reset" onclick="resetBoard()">Reset</button>
+  
+  
+  <script>
+    var currentPlayer = "X";
+    var won=false;
+
+    function place(box) {
+      if (box.innerText != "" || won) return;
+
+      box.innerText = currentPlayer;
+      currentPlayer=="X" ? currentPlayer="O": currentPlayer="X";
+      checkGameBoard();
+
+      function checkGameBoard() {
+        for (var i = 0; i <= 2; i++) {
+          //Columns
+          checkWinner(document.getElementById(i + "_0").innerText, document.getElementById(i + "_1").innerText, document.getElementById(i + "_2").innerText, i, "column");
+          //Rows
+          checkWinner(document.getElementById("0_" + i).innerText, document.getElementById("1_" + i).innerText, document.getElementById("2_" + i).innerText, i, "row");
+        }
+        //Diagonals
+        checkWinner(document.getElementById("0_0").innerText, document.getElementById("1_1").innerText, document.getElementById("2_2").innerText, i,  "diagonal1");
+
+        checkWinner(document.getElementById("2_0").innerText, document.getElementById("1_1").innerText, document.getElementById("0_2").innerText, i,  "diagonal2");
+      }
+    }
+    function checkWinner(first,second,third, i, direction) {
+      if (first!="" && first == second && first == third) {
+        alert("You Won!");
+        won = true;
+
+        //Box Highlight
+        if (direction == "column") {
+          for (x=0;x<=2;x++) {
+            document.getElementById(i + "_" + x).style.background="#c2cff2";
+          }
+        } else if (direction == "row") {
+          for (x=0;x<=2;x++) {
+            document.getElementById(x + "_" + i).style.background="#c2cff2";
+          }
+        } else if (direction=="diagonal1") {
+          for (x=0;x<=2;x++) {
+            document.getElementById(x + "_" + x).style.background="#c2cff2";
+          }
+        } 
+        else if (direction=="diagonal2") {
+          var y = 2;
+          for (x=0;x<=2;x++) {
+            document.getElementById(x + "_" + y).style.background="#c2cff2";
+            y--;
+          }
+        }
+      }
+    }
+    //Board Reset
+    function resetBoard() {
+      for (var i = 0; i <= 2; i++) {
+        document.getElementById(i + "_0").innerText = "";
+        document.getElementById(i + "_0").style.background = "";
+      }
+      for (var i = 0; i <= 2; i++) {
+        document.getElementById(i + "_1").innerText = "";
+        document.getElementById(i + "_1").style.background = "";
+      }
+      for (var i = 0; i <= 2; i++) {
+        document.getElementById(i + "_2").innerText = "";
+        document.getElementById(i + "_2").style.background = "";
+      }
+      won = false;
+    }
+  </script>
+  </body>
+
+</html>
